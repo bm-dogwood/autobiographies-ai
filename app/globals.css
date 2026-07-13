@@ -1,26 +1,179 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
+
+/* Autobiographies.ai — warm editorial design system */
 
 @theme inline {
+  --font-serif: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ivory: var(--ivory);
+  --color-cream: var(--cream);
+  --color-parchment: var(--parchment);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-mute: var(--ink-mute);
+  --color-line: var(--line);
+  --color-forest: var(--forest);
+  --color-forest-soft: var(--forest-soft);
+  --color-navy: var(--navy);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+
+  --color-card: var(--cream);
+  --color-card-foreground: var(--ink);
+  --color-popover: var(--cream);
+  --color-popover-foreground: var(--ink);
+  --color-primary: var(--forest);
+  --color-primary-foreground: var(--ivory);
+  --color-secondary: var(--parchment);
+  --color-secondary-foreground: var(--ink);
+  --color-muted: var(--parchment);
+  --color-muted-foreground: var(--ink-mute);
+  --color-accent: var(--gold-soft);
+  --color-accent-foreground: var(--ink);
+  --color-destructive: oklch(0.55 0.19 27);
+  --color-destructive-foreground: var(--ivory);
+  --color-border: var(--line);
+  --color-input: var(--line);
+  --color-ring: var(--forest);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --background: oklch(0.972 0.014 82); /* warm ivory */
+  --foreground: oklch(0.22 0.02 60); /* charcoal ink */
+  --ivory: oklch(0.972 0.014 82);
+  --cream: oklch(0.955 0.02 82);
+  --parchment: oklch(0.93 0.028 78);
+  --ink: oklch(0.22 0.02 60);
+  --ink-soft: oklch(0.34 0.02 60);
+  --ink-mute: oklch(0.52 0.018 65);
+  --line: oklch(0.86 0.02 72);
+  --forest: oklch(0.36 0.055 155); /* deep muted forest */
+  --forest-soft: oklch(0.55 0.06 155);
+  --navy: oklch(0.32 0.05 245);
+  --gold: oklch(0.72 0.11 78);
+  --gold-soft: oklch(0.86 0.06 82);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  * {
+    border-color: var(--color-line);
+  }
+  body {
+    background: var(--color-ivory);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+  }
+  ::selection {
+    background: var(--color-gold-soft);
+    color: var(--color-ink);
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.015em;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility text-display {
+  font-family: var(--font-serif);
+  font-weight: 350;
+  letter-spacing: -0.028em;
+  line-height: 0.98;
+}
+@utility text-editorial {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+@utility eyebrow {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.68rem;
+  color: var(--color-ink-mute);
+}
+@utility paper-grain {
+  background-image: radial-gradient(
+    oklch(0.5 0.03 60 / 0.06) 1px,
+    transparent 1px
+  );
+  background-size: 3px 3px;
+}
+@utility hover-lift {
+  transition:
+    transform 500ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 500ms;
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 60px -30px oklch(0.22 0.02 60 / 0.18);
+  }
+}
+@utility soft-card {
+  background: var(--color-cream);
+  border: 1px solid var(--color-line);
+  border-radius: 20px;
+  box-shadow:
+    0 1px 0 oklch(1 0 0 / 0.6) inset,
+    0 20px 40px -30px oklch(0.22 0.02 60 / 0.15);
+}
+@utility parchment-bg {
+  background: radial-gradient(
+    ellipse at top,
+    oklch(0.98 0.012 78) 0%,
+    oklch(0.955 0.02 82) 40%,
+    oklch(0.93 0.028 78) 100%
+  );
+}
+@utility dawn-bg {
+  background:
+    radial-gradient(
+      1200px 700px at 15% 20%,
+      oklch(0.88 0.06 78 / 0.7),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 600px at 85% 30%,
+      oklch(0.85 0.055 60 / 0.55),
+      transparent 60%
+    ),
+    radial-gradient(
+      800px 500px at 50% 100%,
+      oklch(0.83 0.07 155 / 0.35),
+      transparent 65%
+    ),
+    var(--color-ivory);
+}
+
+/* app/globals.css */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* Adjust this to match your header height + some padding */
+}
+
+/* For Safari support */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
